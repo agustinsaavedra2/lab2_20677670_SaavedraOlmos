@@ -1,5 +1,7 @@
-flow(ID, Name_Message, Options, [ID, Name_Message, ListOptions]):-
-    combine1(Options, [], ListOptions).
+:-use_module(tda_option, [option/6, remove_duplicate_options/3, addOptionToOptions/3]).
+
+flow(ID, Name_Message, Options, [ID, Name_Message, FlowOptions]):-
+    remove_duplicate_options(Options, [], FlowOptions).
 
 id_flow(ID, Flow):-
     flow(ID,_,_,Flow).
@@ -10,8 +12,8 @@ options_flow(Options, Flow):-
 flowAddOption(Flow, NewOption, NewFlow):-
     flow(ID, Name, _, Flow),
     options_flow(Options, Flow),
-    combine1([NewOption | Options], [], FlowOptions),
-    flow(ID,Name,FlowOptions,NewFlow).
+    addOptionToOptions(Options, NewOption, ListOptions),
+    flow(ID, Name, ListOptions, NewFlow).
 
 combine2([],_,[]).
 

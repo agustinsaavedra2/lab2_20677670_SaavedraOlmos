@@ -1,15 +1,21 @@
+:- module(tda_option, [option/6, addOptionToOptions/3, remove_duplicate_options/3]).
+
 option(Code, Message, ChatbotCodeLink, InitialFlowCodeLink, Keywords, 
         [Code, Message, ChatbotCodeLink, InitialFlowCodeLink, Keywords]).
 
 code_option(Code, Option):-
     option(Code,_,_,_,_,Option).
 
-combine1([],_,[]).
+addOptionToOptions(Options, NewOption, [NewOption | Options]).
 
-combine1([H|T],List2,[H|L]):-
-    \+ member(H,List2),
-    combine1(T,[H | List2],L).
+remove_duplicate_options([], _, []).
 
-combine1([H|T],List2,L):-
-    member(H,List2),
-    combine1(T,List2,L).
+remove_duplicate_options([Option | RestOptions], OptionCodes, [Option | ListOptions]):-
+    code_option(Code, Option),
+    \+ member(Code, OptionCodes),
+    remove_duplicate_options(RestOptions, [Code | OptionCodes], ListOptions).
+
+remove_duplicate_options([Option | RestOptions], OptionCodes, ListOptions):-
+    code_option(Code, Option),
+    member(Code, OptionCodes),
+    remove_duplicate_options(RestOptions, OptionCodes, ListOptions).
