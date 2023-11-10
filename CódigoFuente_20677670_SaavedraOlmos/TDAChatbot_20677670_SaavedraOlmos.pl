@@ -1,6 +1,9 @@
+:- module(tda_chatbot, [chatbot/6, remove_duplicate_chatbots/3]).
+:- use_module(tda_flow, [flow/4, remove_duplicate_flows/3]).
+
 chatbot(ChatbotID, Name, WelcomeMessage, StartFlowID, Flows,
 [ChatbotID, Name, WelcomeMessage, StartFlowID, ListFlows]):-
-    combine2(Flows, [], ListFlows).
+    remove_duplicate_flows(Flows, [], ListFlows), !.
 
 id_chatbot(ID, Chatbot):-
     chatbot(ID,_,_,_,_,Chatbot).
@@ -14,12 +17,9 @@ chatbotAddFlow(Chatbot, Flow, NewChatbot):-
     append(Flows, [Flow], ListFlows),
     chatbot(ChatbotID, Name, WelcomeMessage, StartFlowID, ListFlows, NewChatbot).
 
-combine3([],_,[]).
+remove_duplicate_chatbots([],_,[]).
 
-combine3([H|T],List2,[H|L]):-
-    \+ member(H,List2),
-    combine3(T,List2,L).
-
-combine3([H|T],List2,L):-
-    member(H,List2),
-    combine3(T,List2,L).
+remove_duplicate_chatbots([Chatbot | RestChatbots],IDChatbots,[Chatbot|ListChatbots]):-
+    id_chatbot(ChatbotID, Chatbot),
+    \+ member(ChatbotID, IDChatbots),
+    remove_duplicate_chatbots(RestChatbots, [ChatbotID | IDChatbots], ListChatbots).

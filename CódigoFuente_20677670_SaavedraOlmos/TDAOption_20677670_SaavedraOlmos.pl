@@ -14,8 +14,3 @@ remove_duplicate_options([Option | RestOptions], OptionCodes, [Option | ListOpti
     code_option(Code, Option),
     \+ member(Code, OptionCodes),
     remove_duplicate_options(RestOptions, [Code | OptionCodes], ListOptions).
-
-remove_duplicate_options([Option | RestOptions], OptionCodes, ListOptions):-
-    code_option(Code, Option),
-    member(Code, OptionCodes),
-    remove_duplicate_options(RestOptions, OptionCodes, ListOptions).

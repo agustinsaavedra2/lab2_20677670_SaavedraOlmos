@@ -1,9 +1,9 @@
-:- use_module(tda_chatbot, [chatbot/6, combine3/3]).
+:- use_module(tda_chatbot, [chatbot/6, remove_duplicate_chatbots/3]).
 :- use_module(tda_user, [user/3]). 
 
 system(Name, InitialChatbotCodeLink, Chatbots,
-[Name, InitialChatbotCodeLink, ListChatbots]):-
-     combine3(Chatbots, [], ListChatbots).
+[Name, InitialChatbotCodeLink, ListChatbots, [], [], []]):-
+     remove_duplicate_chatbots(Chatbots, [], ListChatbots), !.
 
 users_system(System, Users):-
      system(_,_,_,Users,_,_,System).
@@ -17,7 +17,7 @@ chatbots_system(Chatbots, System):-
 systemAddChatbot(System, Chatbot, NewSystem):-
      system(Name, InitialChatbotCodeLink, _, System),
      chatbots_system(Chatbots, System),
-     combine3([Chatbot | Chatbots], [], ListChatbots),
+     remove_duplicate_chatbots([Chatbot | Chatbots], [], ListChatbots),
      system(Name, InitialChatbotCodeLink, ListChatbots, NewSystem).
 
 systemAddUser(System, UserName, NewSystem):-
