@@ -1,5 +1,5 @@
 :- module(tda_chatbot, [chatbot/6, remove_duplicate_chatbots/3]).
-:- use_module(tda_flow, [flow/4, remove_duplicate_flows/3]).
+:- use_module(tda_flow, [flow/4, remove_duplicate_flows/3, id_flow/2, id_flows/2]).
 
 % Dominio: ChatbotID (int) X Name (string) X WelcomeMessage (string) X StartFlowID (int)
 % X Flows (List) X Chatbot (List).
@@ -15,14 +15,20 @@ chatbot(ChatbotID, Name, WelcomeMessage, StartFlowID, Flows,
 id_chatbot(ID, Chatbot):-
     chatbot(ID,_,_,_,_,Chatbot).
 
-flows_chatbot(Flows, Chatbot):-
-    chatbot(_,_,_,_,Flows,Chatbot).
+chatbotAddFlow([], _, []).
 
-chatbotAddFlow(Chatbot, Flow, NewChatbot):-
-    chatbot(ChatbotID, Name, WelcomeMessage, StartFlowID, _, Chatbot),
-    flows_chatbot(Flows, Chatbot),
-    append(Flows, [Flow], ListFlows),
-    chatbot(ChatbotID, Name, WelcomeMessage, StartFlowID, ListFlows, NewChatbot).
+chatbotAddFlow([ID, Name, WelcomeMessage, StartFlowID, [Flow | RestFlows]], NewFlow, 
+               [ID, Name, WelcomeMessage, StartFlowID, [Flow | [NewFlow | ListFlows]]]):-
+    id_flow(IDNewFlow, NewFlow),
+    id_flows([Flow | RestFlows], FlowsID),
+    \+ member(IDNewFlow, FlowsID),
+    chatbotAddFlow(RestFlows, [NewFlow | ListFlows], ListFlows).
+
+% Dominio: Chatbots (List) X IDChatbots (List) X ListChatbots (List).
+% Metas Primarias: remove_duplicate_chatbots.
+% Metas Secundarias: id_chatbot, member, remove_duplicate_chatbots.
+% Descripción: Predicado que elimina chatbots duplicados de una lista de 
+% chatbots, en base a su ID.
 
 remove_duplicate_chatbots([],_,[]).
 

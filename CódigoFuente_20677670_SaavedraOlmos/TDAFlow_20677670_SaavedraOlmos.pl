@@ -1,4 +1,4 @@
-:-module(tda_flow, [flow/4, remove_duplicate_flows/3]).
+:-module(tda_flow, [flow/4, remove_duplicate_flows/3, id_flow/2,id_flows/2]).
 :-use_module(tda_option, [option/6, remove_duplicate_options/3, addOptionToOptions/3]).
 
 % Dominio: ID (int) X Name_Message (string) X Options (List) X Flow (List).
@@ -42,6 +42,12 @@ flowAddOption(Flow, NewOption, NewFlow):-
     sort(ListOptions, FlowOptions),
     flow(ID, Name, FlowOptions, NewFlow).
 
+id_flows([], []).
+
+id_flows([Flow | RestFlows], [IDFlow | RestIDFlows]):-
+    id_flow(IDFlow, Flow),
+    id_flows(RestFlows, RestIDFlows).
+
 % Dominio: Flows (List) X IDFlows (List) X ListFlows (List).
 % Metas Primarias: remove_duplicate_flows.
 % Metas Secundarias: id_flow, member, remove_duplicate_flows.
@@ -54,4 +60,3 @@ remove_duplicate_flows([Flow | RestFlows], IDFlows, [Flow | ListFlows]):-
     id_flow(FlowID, Flow),
     \+ member(FlowID, IDFlows),
     remove_duplicate_flows(RestFlows, [FlowID | IDFlows], ListFlows).
-
