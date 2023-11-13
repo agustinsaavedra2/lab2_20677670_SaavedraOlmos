@@ -1,5 +1,5 @@
 :- use_module(TDAChatbot_20677670_SaavedraOlmos, [chatbot/6, remove_duplicate_chatbots/3]).
-:- use_module(TDASystem_20677670_SaavedraOlmos, [user/3, remove_duplicate_users/3]).
+:- use_module(TDAUser_20677670_SaavedraOlmos, [user/3, remove_duplicate_users/3]).
 :- use_module(TDAChatHistory_20677670_SaavedraOlmos, [chatHistory/4]). 
 
 % Dominio: Name (int) X InitialChatbotCodeLink (string) X Chatbots (list) X System (list).

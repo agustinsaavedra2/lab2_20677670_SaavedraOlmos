@@ -1,0 +1,7 @@
+Los archivos de cada TDA y el de script de pruebas deben estar en la misma 
+carpeta para asegurar un buen funcionamiento del código y evitar cualquier tipo de error al momento de ejecutar el script de pruebas del laboratorio .
+
+Es recomendable usar el comando “set_prolog_flag(answer_write_options, [max_depth(0)])” al momento de consultar las variables en Prolog para obtener una mejor visualización del resultado al momento de la ejecución. Es necesario usar el intérprete de SWI-Prolog al momento de realizar las consultas para poder utilizar el programa. 
+
+Se pueden generar errores posibles, si se introducen datos incorrectos o si no se sigue con los dominios de los predicados al momento de ejecutar el script de pruebas.
+
