@@ -1,4 +1,4 @@
-:- module(tda_option, [option/6, addOptionToOptions/3, remove_duplicate_options/3]).
+:- module(TDAOption_20677670_SaavedraOlmos, [option/6, addOptionToOptions/3, remove_duplicate_options/3]).
 
 % Dominio: Code (int) X Message (string) X ChatbotCodeLink (int) X InitialFlowCodeLink (int)
 % X Keywords (List) X Option (List).

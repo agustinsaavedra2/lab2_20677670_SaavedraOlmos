@@ -1,5 +1,5 @@
-:-module(tda_flow, [flow/4, remove_duplicate_flows/3, id_flow/2,id_flows/2]).
-:-use_module(tda_option, [option/6, remove_duplicate_options/3, addOptionToOptions/3]).
+:-module(TDAFlow_20677670_SaavedraOlmos, [flow/4, remove_duplicate_flows/3, id_flow/2,id_flows/2]).
+:-use_module(TDAOption_20677670_SaavedraOlmos, [option/6, remove_duplicate_options/3, addOptionToOptions/3]).
 
 % Dominio: ID (int) X Name_Message (string) X Options (List) X Flow (List).
 % Metas Primarias: flow.
@@ -42,6 +42,12 @@ flowAddOption(Flow, NewOption, NewFlow):-
     sort(ListOptions, FlowOptions),
     flow(ID, Name, FlowOptions, NewFlow).
 
+% Dominio: Flows (List) X IDFlows (List).
+% Metas Primarias: id_flows.
+% Metas Secundarias: id_flow, id_flows.
+% Descripción: Predicado con relación recursiva natural que obtiene todos los id's de una lista de 
+% flujos.
+
 id_flows([], []).
 
 id_flows([Flow | RestFlows], [IDFlow | RestIDFlows]):-
@@ -51,7 +57,7 @@ id_flows([Flow | RestFlows], [IDFlow | RestIDFlows]):-
 % Dominio: Flows (List) X IDFlows (List) X ListFlows (List).
 % Metas Primarias: remove_duplicate_flows.
 % Metas Secundarias: id_flow, member, remove_duplicate_flows.
-% Descripción: Predicado que elimina flujos duplicados de una lista de 
+% Descripción: Predicado con relación recursiva natural que elimina flujos duplicados de una lista de 
 % flujos, en base a su ID.
 
 remove_duplicate_flows([], _, []).
